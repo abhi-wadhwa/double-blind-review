@@ -13,8 +13,7 @@ Detects and redacts:
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass, field
-from typing import Optional
+from dataclasses import dataclass
 
 from src.core.audit import AuditTrail
 
@@ -89,8 +88,8 @@ class AnonymizationEngine:
 
     def __init__(
         self,
-        custom_patterns: Optional[list[re.Pattern]] = None,
-        audit: Optional[AuditTrail] = None,
+        custom_patterns: list[re.Pattern] | None = None,
+        audit: AuditTrail | None = None,
     ) -> None:
         self._counter = 0
         self._id_map: dict[str, str] = {}

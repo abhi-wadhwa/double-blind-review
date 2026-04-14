@@ -14,26 +14,25 @@ import argparse
 import json
 import sys
 import uuid
-from pathlib import Path
 
-from src.core.anonymization import AnonymizationEngine
-from src.core.rubric import RubricSystem, Dimension
-from src.core.assignment import AssignmentAlgorithm
-from src.core.calibration import CalibrationEngine
 from src.core.aggregation import ScoreAggregator
-from src.core.reliability import ReliabilityCalculator
+from src.core.anonymization import AnonymizationEngine
+from src.core.assignment import AssignmentAlgorithm
 from src.core.audit import AuditTrail
+from src.core.calibration import CalibrationEngine
 from src.core.models import (
-    Application,
-    Reviewer,
-    Review,
     AggregationMethod,
+    Application,
+    Review,
+    Reviewer,
 )
+from src.core.reliability import ReliabilityCalculator
+from src.core.rubric import Dimension, RubricSystem
 
 
 def cmd_anonymize(args: argparse.Namespace) -> None:
     """Anonymize a JSON file of applications."""
-    with open(args.input, "r") as f:
+    with open(args.input) as f:
         data = json.load(f)
 
     entries = data if isinstance(data, list) else [data]
@@ -61,9 +60,9 @@ def cmd_anonymize(args: argparse.Namespace) -> None:
 
 def cmd_assign(args: argparse.Namespace) -> None:
     """Generate reviewer assignments."""
-    with open(args.apps, "r") as f:
+    with open(args.apps) as f:
         app_data = json.load(f)
-    with open(args.reviewers, "r") as f:
+    with open(args.reviewers) as f:
         reviewer_data = json.load(f)
 
     apps = [
@@ -106,11 +105,11 @@ def cmd_assign(args: argparse.Namespace) -> None:
 
 def cmd_aggregate(args: argparse.Namespace) -> None:
     """Aggregate review scores."""
-    with open(args.reviews, "r") as f:
+    with open(args.reviews) as f:
         review_data = json.load(f)
 
     if args.rubric:
-        with open(args.rubric, "r") as f:
+        with open(args.rubric) as f:
             rubric = RubricSystem.from_dict(json.load(f))
     else:
         rubric = RubricSystem.default_rubric()
@@ -152,7 +151,7 @@ def cmd_aggregate(args: argparse.Namespace) -> None:
 
 def cmd_reliability(args: argparse.Namespace) -> None:
     """Compute inter-rater reliability."""
-    with open(args.reviews, "r") as f:
+    with open(args.reviews) as f:
         review_data = json.load(f)
 
     reviews = [

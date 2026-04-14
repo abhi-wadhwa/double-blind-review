@@ -25,9 +25,7 @@ For interval/ratio data, it uses squared differences.
 
 from __future__ import annotations
 
-import math
 from collections import defaultdict
-from typing import Optional
 
 from src.core.audit import AuditTrail
 from src.core.models import Review
@@ -48,7 +46,7 @@ class ReliabilityCalculator:
     def __init__(
         self,
         data_type: str = "interval",
-        audit: Optional[AuditTrail] = None,
+        audit: AuditTrail | None = None,
     ) -> None:
         if data_type not in self.VALID_TYPES:
             raise ValueError(
@@ -76,7 +74,7 @@ class ReliabilityCalculator:
         hi_idx = sorted_values.index(hi)
 
         # Sum of counts between lo and hi (inclusive)
-        cum_sum = sum(
+        cum_sum: float = sum(
             value_counts.get(sorted_values[i], 0)
             for i in range(lo_idx, hi_idx + 1)
         )
@@ -135,14 +133,15 @@ class ReliabilityCalculator:
         sorted_values = sorted(value_counts.keys())
 
         # Choose delta function
-        if self.data_type == "nominal":
-            delta = lambda a, b: self._delta_nominal(a, b)
-        elif self.data_type == "ordinal":
-            delta = lambda a, b: self._delta_ordinal(a, b, value_counts, sorted_values)
-        elif self.data_type == "ratio":
-            delta = lambda a, b: self._delta_ratio(a, b)
-        else:
-            delta = lambda a, b: self._delta_interval(a, b)
+        def delta(a: float, b: float) -> float:
+            if self.data_type == "nominal":
+                return self._delta_nominal(a, b)
+            elif self.data_type == "ordinal":
+                return self._delta_ordinal(a, b, value_counts, sorted_values)
+            elif self.data_type == "ratio":
+                return self._delta_ratio(a, b)
+            else:
+                return self._delta_interval(a, b)
 
         # Compute observed disagreement D_o
         d_o = 0.0
@@ -214,7 +213,7 @@ class ReliabilityCalculator:
     def compute_from_reviews(
         self,
         reviews: list[Review],
-        dimension: Optional[str] = None,
+        dimension: str | None = None,
     ) -> dict[str, float]:
         """Compute Krippendorff's alpha from review objects.
 

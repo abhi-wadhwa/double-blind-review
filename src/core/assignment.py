@@ -10,7 +10,6 @@ from __future__ import annotations
 import random
 from collections import defaultdict
 from dataclasses import dataclass, field
-from typing import Optional
 
 from src.core.audit import AuditTrail
 from src.core.models import Application, Reviewer
@@ -79,8 +78,8 @@ class AssignmentAlgorithm:
     def __init__(
         self,
         reviews_per_application: int = 3,
-        seed: Optional[int] = None,
-        audit: Optional[AuditTrail] = None,
+        seed: int | None = None,
+        audit: AuditTrail | None = None,
     ) -> None:
         if reviews_per_application < 1:
             raise ValueError("reviews_per_application must be >= 1")

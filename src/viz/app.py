@@ -12,30 +12,29 @@ Provides four main views:
 
 from __future__ import annotations
 
+import csv
 import io
 import json
-import csv
 import uuid
 from typing import Any
 
 import streamlit as st
 
-from src.core.anonymization import AnonymizationEngine
-from src.core.rubric import RubricSystem, Dimension
-from src.core.assignment import AssignmentAlgorithm
-from src.core.calibration import CalibrationEngine
 from src.core.aggregation import ScoreAggregator
-from src.core.reliability import ReliabilityCalculator
+from src.core.anonymization import AnonymizationEngine
+from src.core.assignment import AssignmentAlgorithm
 from src.core.audit import AuditTrail
+from src.core.calibration import CalibrationEngine
 from src.core.models import (
-    Application,
-    Reviewer,
-    ReviewCycle,
-    Review,
     AggregationMethod,
+    Application,
+    Review,
+    ReviewCycle,
     ReviewCyclePhase,
+    Reviewer,
 )
-
+from src.core.reliability import ReliabilityCalculator
+from src.core.rubric import Dimension, RubricSystem
 
 # ---------------------------------------------------------------------------
 # Session state initialization

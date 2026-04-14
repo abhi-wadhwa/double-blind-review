@@ -6,7 +6,6 @@ import pytest
 
 from src.core.anonymization import AnonymizationEngine, RedactionStats
 
-
 # ---------------------------------------------------------------------------
 # Fixtures
 # ---------------------------------------------------------------------------

@@ -3,9 +3,8 @@
 import pytest
 
 from src.core.aggregation import ScoreAggregator
-from src.core.models import AggregatedScore, AggregationMethod, Review, Reviewer
+from src.core.models import AggregationMethod, Review, Reviewer
 from src.core.rubric import Dimension, RubricSystem
-
 
 # ---------------------------------------------------------------------------
 # Fixtures

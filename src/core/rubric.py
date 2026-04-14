@@ -9,7 +9,6 @@ for storage.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Optional
 
 
 @dataclass
@@ -102,7 +101,7 @@ class RubricSystem:
     validation and normalization.
     """
 
-    def __init__(self, dimensions: Optional[list[Dimension]] = None) -> None:
+    def __init__(self, dimensions: list[Dimension] | None = None) -> None:
         self._dimensions: dict[str, Dimension] = {}
         for dim in dimensions or []:
             self.add_dimension(dim)
@@ -210,7 +209,10 @@ class RubricSystem:
                     min_score=1,
                     max_score=5,
                     weight=2.0,
-                    anchors={1: "Poor", 2: "Below Average", 3: "Average", 4: "Good", 5: "Excellent"},
+                    anchors={
+                        1: "Poor", 2: "Below Average", 3: "Average",
+                        4: "Good", 5: "Excellent",
+                    },
                 ),
                 Dimension(
                     name="originality",

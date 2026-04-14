@@ -11,7 +11,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
-from typing import Any, Optional
+from typing import Any
 
 
 @dataclass
@@ -65,8 +65,8 @@ class AuditTrail:
         self,
         action: str,
         entity_id: str = "",
-        details: Optional[dict[str, Any]] = None,
-        actor: Optional[str] = None,
+        details: dict[str, Any] | None = None,
+        actor: str | None = None,
     ) -> AuditEntry:
         """Append a new entry to the audit trail.
 
@@ -99,10 +99,10 @@ class AuditTrail:
 
     def filter(
         self,
-        action: Optional[str] = None,
-        entity_id: Optional[str] = None,
-        actor: Optional[str] = None,
-        since: Optional[str] = None,
+        action: str | None = None,
+        entity_id: str | None = None,
+        actor: str | None = None,
+        since: str | None = None,
     ) -> list[AuditEntry]:
         """Filter audit entries by criteria.
 

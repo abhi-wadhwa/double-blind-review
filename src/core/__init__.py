@@ -1,20 +1,20 @@
 """Core modules for double-blind review platform."""
 
-from src.core.anonymization import AnonymizationEngine
-from src.core.rubric import RubricSystem, Dimension
-from src.core.assignment import AssignmentAlgorithm
-from src.core.calibration import CalibrationEngine
 from src.core.aggregation import ScoreAggregator
-from src.core.reliability import ReliabilityCalculator
+from src.core.anonymization import AnonymizationEngine
+from src.core.assignment import AssignmentAlgorithm
 from src.core.audit import AuditTrail
+from src.core.calibration import CalibrationEngine
 from src.core.models import (
-    Application,
-    Reviewer,
-    ReviewCycle,
-    Review,
-    CalibrationResult,
     AggregatedScore,
+    Application,
+    CalibrationResult,
+    Review,
+    ReviewCycle,
+    Reviewer,
 )
+from src.core.reliability import ReliabilityCalculator
+from src.core.rubric import Dimension, RubricSystem
 
 __all__ = [
     "AnonymizationEngine",

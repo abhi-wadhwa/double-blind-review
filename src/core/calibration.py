@@ -10,7 +10,6 @@ from __future__ import annotations
 
 import math
 from collections import defaultdict
-from typing import Optional
 
 from src.core.audit import AuditTrail
 from src.core.models import CalibrationResult, Review
@@ -40,7 +39,7 @@ class CalibrationEngine:
     def __init__(
         self,
         threshold: float = 1.5,
-        audit: Optional[AuditTrail] = None,
+        audit: AuditTrail | None = None,
     ) -> None:
         if threshold <= 0:
             raise ValueError("threshold must be positive")

@@ -18,7 +18,6 @@ from __future__ import annotations
 import math
 import statistics
 from collections import defaultdict
-from typing import Optional
 
 from src.core.audit import AuditTrail
 from src.core.models import AggregatedScore, AggregationMethod, Review, Reviewer
@@ -45,7 +44,7 @@ class ScoreAggregator:
         rubric: RubricSystem,
         method: AggregationMethod = AggregationMethod.WEIGHTED_AVERAGE,
         outlier_sigma: float = 2.0,
-        audit: Optional[AuditTrail] = None,
+        audit: AuditTrail | None = None,
     ) -> None:
         self.rubric = rubric
         self.method = method
@@ -122,7 +121,7 @@ class ScoreAggregator:
     def aggregate_application(
         self,
         reviews: list[Review],
-        reviewers: Optional[list[Reviewer]] = None,
+        reviewers: list[Reviewer] | None = None,
         anonymous_id: str = "",
     ) -> AggregatedScore:
         """Aggregate all reviews for a single application.
@@ -192,7 +191,11 @@ class ScoreAggregator:
             dim_stds = []
             for dim_name, score_weight_pairs in dim_scores.items():
                 vals = [s for s, _ in score_weight_pairs]
-                dim = self.rubric.get_dimension(dim_name) if dim_name in self.rubric.dimension_names else None
+                dim = (
+                    self.rubric.get_dimension(dim_name)
+                    if dim_name in self.rubric.dimension_names
+                    else None
+                )
                 if dim and len(vals) >= 2:
                     span = dim.max_score - dim.min_score
                     if span > 0:
@@ -230,8 +233,8 @@ class ScoreAggregator:
     def aggregate_all(
         self,
         reviews: list[Review],
-        reviewers: Optional[list[Reviewer]] = None,
-        anon_id_map: Optional[dict[str, str]] = None,
+        reviewers: list[Reviewer] | None = None,
+        anon_id_map: dict[str, str] | None = None,
     ) -> list[AggregatedScore]:
         """Aggregate reviews for all applications and produce a ranked list.
 

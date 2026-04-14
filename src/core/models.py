@@ -6,7 +6,6 @@ import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from enum import Enum
-from typing import Optional
 
 
 class ApplicationStatus(str, Enum):
@@ -106,7 +105,7 @@ class Review:
     scores: dict[str, float] = field(default_factory=dict)
     comments: dict[str, str] = field(default_factory=dict)
     overall_comment: str = ""
-    submitted_at: Optional[datetime] = None
+    submitted_at: datetime | None = None
     is_calibration: bool = False
 
     @property

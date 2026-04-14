@@ -5,7 +5,6 @@ import pytest
 from src.core.calibration import CalibrationEngine
 from src.core.models import Review
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------

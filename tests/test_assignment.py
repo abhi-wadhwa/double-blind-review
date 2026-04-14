@@ -4,9 +4,8 @@ from collections import Counter
 
 import pytest
 
-from src.core.assignment import AssignmentAlgorithm, AssignmentPlan
+from src.core.assignment import AssignmentAlgorithm
 from src.core.models import Application, Reviewer
-
 
 # ---------------------------------------------------------------------------
 # Fixtures
